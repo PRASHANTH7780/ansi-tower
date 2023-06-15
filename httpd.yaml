@@ -1,0 +1,26 @@
+---
+- name: Update repository and install httpd, maven
+  hosts: all
+  become: true
+  tasks:
+    - name: Update repository
+      yum:
+        name: '*'
+        state: latest
+      register: yum_update_result
+
+    - name: Install httpd
+      yum:
+        name: httpd
+        state: present
+
+    - name: Start and enable httpd service
+      service:
+        name: httpd
+        state: started
+        enabled: true
+
+    - name: Install Apache Maven
+      yum:
+        name: maven
+        state: present
